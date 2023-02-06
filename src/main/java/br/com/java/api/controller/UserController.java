@@ -38,4 +38,10 @@ public class UserController {
                 .buildAndExpand(userService.create(objectDTO).getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping
+    public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO objectDTO) {
+        objectDTO.setId(id);
+        return ResponseEntity.ok().body(mapper.map(userService.update(objectDTO), UserDTO.class));
+    }
 }
