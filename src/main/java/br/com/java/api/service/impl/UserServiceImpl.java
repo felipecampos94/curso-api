@@ -4,6 +4,7 @@ import br.com.java.api.domain.User;
 import br.com.java.api.domain.dto.UserDTO;
 import br.com.java.api.repository.UserRepository;
 import br.com.java.api.service.UserService;
+import br.com.java.api.service.exception.DataIntegrityViolationdException;
 import br.com.java.api.service.exception.ObjectNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -31,8 +32,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    private void findByEmail(UserDTO objectDTO) {
+        Optional<User> user = userRepository.findByEmail(objectDTO.getEmail());
+        if (user.isPresent()) {
+            throw new DataIntegrityViolationdException("Email já cadastrado!");
+        }
+    }
+
     @Override
-    public User create(UserDTO object) {
-        return userRepository.save(mapper.map(object, User.class));
+    public User create(UserDTO objectDTO) {
+        findByEmail(objectDTO);
+        return userRepository.save(mapper.map(objectDTO, User.class));
     }
 }
