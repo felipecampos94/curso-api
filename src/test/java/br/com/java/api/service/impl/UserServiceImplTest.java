@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -36,9 +35,6 @@ class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
-
-    @Mock
-    private ModelMapper mapper;
 
     private User user;
 
