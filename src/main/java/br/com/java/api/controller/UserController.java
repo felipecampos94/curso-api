@@ -2,8 +2,8 @@ package br.com.java.api.controller;
 
 import br.com.java.api.domain.dto.UserDTO;
 import br.com.java.api.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,13 +14,15 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/user")
-@RequiredArgsConstructor
 public class UserController {
 
     public static final String ID = "/{id}";
-    private final UserService userService;
 
-    private final ModelMapper mapper;
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ModelMapper mapper;
 
     @GetMapping(value = ID)
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
