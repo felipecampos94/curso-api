@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
@@ -35,6 +36,9 @@ class UserServiceImplTest {
 
     @Mock
     private UserRepository userRepository;
+
+    @Mock
+    private ModelMapper mapper;
 
     private User user;
 
@@ -94,6 +98,9 @@ class UserServiceImplTest {
         assertNotNull(response);
         assertEquals(User.class, response.getClass());
         assertEquals(ID, response.getId());
+        assertEquals(NAME, response.getName());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
@@ -101,6 +108,7 @@ class UserServiceImplTest {
         when(userRepository.findByEmail(anyString())).thenReturn(optionalUser);
 
         try {
+            optionalUser.get().setId(2);
             userService.create(userDTO);
         } catch (Exception e) {
             assertEquals(DataIntegrityViolationdException.class, e.getClass());
@@ -117,6 +125,9 @@ class UserServiceImplTest {
         assertNotNull(response);
         assertEquals(User.class, response.getClass());
         assertEquals(ID, response.getId());
+        assertEquals(NAME, response.getName());
+        assertEquals(EMAIL, response.getEmail());
+        assertEquals(PASSWORD, response.getPassword());
     }
 
     @Test
@@ -124,6 +135,7 @@ class UserServiceImplTest {
         when(userRepository.findByEmail(anyString())).thenReturn(optionalUser);
 
         try {
+            optionalUser.get().setId(2);
             userService.update(userDTO);
         } catch (Exception e) {
             assertEquals(DataIntegrityViolationdException.class, e.getClass());

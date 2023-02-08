@@ -6,7 +6,4 @@ public class DataIntegrityViolationdException extends RuntimeException {
         super(message);
     }
 
-    public DataIntegrityViolationdException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
